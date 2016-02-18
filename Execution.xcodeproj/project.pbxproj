@@ -10,6 +10,11 @@
 		8FD874691C76150900181FA6 /* Execution.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FD874681C76150900181FA6 /* Execution.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FD874701C76150A00181FA6 /* Execution.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD874651C76150900181FA6 /* Execution.framework */; };
 		8FD874751C76150A00181FA6 /* ExecutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD874741C76150A00181FA6 /* ExecutionTests.swift */; };
+		8FD874811C76151D00181FA6 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8747F1C76151D00181FA6 /* Async.swift */; };
+		8FD874821C76151D00181FA6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD874801C76151D00181FA6 /* Task.swift */; };
+		8FD874841C76156D00181FA6 /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD874831C76156D00181FA6 /* TaskTests.swift */; };
+		8FD874861C7615C600181FA6 /* AsyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD874851C7615C600181FA6 /* AsyncTests.swift */; };
+		8FD875021C76260800181FA6 /* FloatAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD875011C76260800181FA6 /* FloatAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +34,11 @@
 		8FD8746F1C76150A00181FA6 /* ExecutionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExecutionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FD874741C76150A00181FA6 /* ExecutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutionTests.swift; sourceTree = "<group>"; };
 		8FD874761C76150A00181FA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8FD8747F1C76151D00181FA6 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
+		8FD874801C76151D00181FA6 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		8FD874831C76156D00181FA6 /* TaskTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTests.swift; sourceTree = "<group>"; };
+		8FD874851C7615C600181FA6 /* AsyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncTests.swift; sourceTree = "<group>"; };
+		8FD875011C76260800181FA6 /* FloatAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatAnimator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +81,9 @@
 		8FD874671C76150900181FA6 /* Execution */ = {
 			isa = PBXGroup;
 			children = (
+				8FD8747F1C76151D00181FA6 /* Async.swift */,
+				8FD874801C76151D00181FA6 /* Task.swift */,
+				8FD875011C76260800181FA6 /* FloatAnimator.swift */,
 				8FD874681C76150900181FA6 /* Execution.h */,
 				8FD8746A1C76150900181FA6 /* Info.plist */,
 			);
@@ -80,6 +93,8 @@
 		8FD874731C76150A00181FA6 /* ExecutionTests */ = {
 			isa = PBXGroup;
 			children = (
+				8FD874831C76156D00181FA6 /* TaskTests.swift */,
+				8FD874851C7615C600181FA6 /* AsyncTests.swift */,
 				8FD874741C76150A00181FA6 /* ExecutionTests.swift */,
 				8FD874761C76150A00181FA6 /* Info.plist */,
 			);
@@ -194,6 +209,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FD875021C76260800181FA6 /* FloatAnimator.swift in Sources */,
+				8FD874821C76151D00181FA6 /* Task.swift in Sources */,
+				8FD874811C76151D00181FA6 /* Async.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +219,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FD874841C76156D00181FA6 /* TaskTests.swift in Sources */,
 				8FD874751C76150A00181FA6 /* ExecutionTests.swift in Sources */,
+				8FD874861C7615C600181FA6 /* AsyncTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +328,7 @@
 		8FD8747A1C76150A00181FA6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -318,12 +339,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.silverback-it.Execution";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		8FD8747B1C76150A00181FA6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -376,6 +399,7 @@
 				8FD8747B1C76150A00181FA6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8FD8747C1C76150A00181FA6 /* Build configuration list for PBXNativeTarget "ExecutionTests" */ = {
 			isa = XCConfigurationList;
@@ -384,6 +408,7 @@
 				8FD8747E1C76150A00181FA6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
