@@ -51,7 +51,7 @@ public class Task
     public func unschedule()
     {
         scheduled = 0
-        secret++
+        secret += 1
     }
     
     /// Schedule task to execute after _delay_ seconds
@@ -63,9 +63,9 @@ public class Task
     {
         let capturedSecret = secret
         
-        delay(max(0.1, after)) { [weak self] in if self?.secret == capturedSecret { self?.scheduled--; self?.closure() } }
+        delay(max(0.1, after)) { [weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
 
-        scheduled++
+        scheduled += 1
     }
     
     /// Schedule task to execute after _delay_ seconds if it is not already scheduled
