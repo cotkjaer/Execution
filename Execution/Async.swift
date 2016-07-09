@@ -34,21 +34,6 @@ public enum ExecutionPriority
 
 // MARK: - Delay
 
-//private extension Double
-//{
-//    var dispatch_time : dispatch_time_t
-//        {
-//            if self <= 0.0001
-//            {
-//                return DISPATCH_TIME_NOW
-//            }
-//            else
-//            {
-//                return Foundation.dispatch_time(DISPATCH_TIME_NOW, Int64(self * Double(NSEC_PER_SEC)))
-//            }
-//    }
-//}
-
 public extension dispatch_time_t
 {
     func delay(delay: Double) -> dispatch_time_t
@@ -68,7 +53,7 @@ public func delay(delay:Double, priority: ExecutionPriority? = nil, closure:()->
 {
     let queue : dispatch_queue_t = priority?.queue() ?? dispatch_get_main_queue()
     
-    if delay <= 0.001
+    if delay < 0.001
     {
         dispatch_async(queue, closure)
     }
@@ -87,14 +72,11 @@ public func delay(delay:Double, priority: ExecutionPriority? = nil, closure:()->
 public func background(delay d: Double = 0, priority: ExecutionPriority = .Default, closure:()->())
 {
     delay(d, priority: priority, closure: closure)
-//    dispatch_async(priority.queue(), closure)
 }
 
 public func foreground(delay d: Double = 0, closure:()->())
 {
     delay(d, closure: closure)
-    
-//    dispatch_async(dispatch_get_main_queue(), closure)
 }
 
 public func async(priority: ExecutionPriority? = nil, closure:()->())

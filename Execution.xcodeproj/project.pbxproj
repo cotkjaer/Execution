@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F59DC931D300C230002AB0C /* NSOperation+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC921D300C230002AB0C /* NSOperation+State.swift */; };
+		8F59DC951D300D360002AB0C /* NSOperationQueue+Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC941D300D360002AB0C /* NSOperationQueue+Delay.swift */; };
+		8F59DC971D300E0B0002AB0C /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC961D300E0B0002AB0C /* Delay.swift */; };
+		8F59DC991D30D2C00002AB0C /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC981D30D2C00002AB0C /* Timer.swift */; };
+		8F59DC9B1D30D6B70002AB0C /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC9A1D30D6B70002AB0C /* Synchronized.swift */; };
+		8F59DC9D1D30EC470002AB0C /* DelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC9C1D30EC470002AB0C /* DelayTests.swift */; };
+		8F59DC9F1D3115EB0002AB0C /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC9E1D3115EB0002AB0C /* QueueTests.swift */; };
+		8FBEC3701D2576BD000B4A30 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC36F1D2576BD000B4A30 /* Queue.swift */; };
+		8FBEC3721D25802B000B4A30 /* Semaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC3711D25802B000B4A30 /* Semaphore.swift */; };
+		8FBEC3741D2645F7000B4A30 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC3731D2645F7000B4A30 /* Lock.swift */; };
+		8FBEC3761D264C36000B4A30 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC3751D264C36000B4A30 /* SpinLock.swift */; };
+		8FBEC3781D264C54000B4A30 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC3771D264C54000B4A30 /* Atomic.swift */; };
+		8FBEC37A1D264DA9000B4A30 /* SpinLockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC3791D264DA9000B4A30 /* SpinLockTests.swift */; };
+		8FBEC37C1D264DBB000B4A30 /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC37B1D264DBB000B4A30 /* AtomicTests.swift */; };
 		8FD874691C76150900181FA6 /* Execution.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FD874681C76150900181FA6 /* Execution.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FD874701C76150A00181FA6 /* Execution.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD874651C76150900181FA6 /* Execution.framework */; };
 		8FD874751C76150A00181FA6 /* ExecutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD874741C76150A00181FA6 /* ExecutionTests.swift */; };
@@ -28,6 +42,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8F59DC921D300C230002AB0C /* NSOperation+State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSOperation+State.swift"; sourceTree = "<group>"; };
+		8F59DC941D300D360002AB0C /* NSOperationQueue+Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSOperationQueue+Delay.swift"; sourceTree = "<group>"; };
+		8F59DC961D300E0B0002AB0C /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
+		8F59DC981D30D2C00002AB0C /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		8F59DC9A1D30D6B70002AB0C /* Synchronized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronized.swift; sourceTree = "<group>"; };
+		8F59DC9C1D30EC470002AB0C /* DelayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelayTests.swift; sourceTree = "<group>"; };
+		8F59DC9E1D3115EB0002AB0C /* QueueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
+		8FBEC36F1D2576BD000B4A30 /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		8FBEC3711D25802B000B4A30 /* Semaphore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Semaphore.swift; sourceTree = "<group>"; };
+		8FBEC3731D2645F7000B4A30 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
+		8FBEC3751D264C36000B4A30 /* SpinLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinLock.swift; sourceTree = "<group>"; };
+		8FBEC3771D264C54000B4A30 /* Atomic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
+		8FBEC3791D264DA9000B4A30 /* SpinLockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinLockTests.swift; sourceTree = "<group>"; };
+		8FBEC37B1D264DBB000B4A30 /* AtomicTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicTests.swift; sourceTree = "<group>"; };
 		8FD874651C76150900181FA6 /* Execution.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Execution.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FD874681C76150900181FA6 /* Execution.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Execution.h; sourceTree = "<group>"; };
 		8FD8746A1C76150900181FA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,6 +112,16 @@
 				8FD8747F1C76151D00181FA6 /* Async.swift */,
 				8FD874801C76151D00181FA6 /* Task.swift */,
 				8FD875011C76260800181FA6 /* FloatAnimator.swift */,
+				8FBEC36F1D2576BD000B4A30 /* Queue.swift */,
+				8FBEC3711D25802B000B4A30 /* Semaphore.swift */,
+				8FBEC3731D2645F7000B4A30 /* Lock.swift */,
+				8FBEC3771D264C54000B4A30 /* Atomic.swift */,
+				8F59DC981D30D2C00002AB0C /* Timer.swift */,
+				8F59DC9A1D30D6B70002AB0C /* Synchronized.swift */,
+				8FBEC3751D264C36000B4A30 /* SpinLock.swift */,
+				8F59DC961D300E0B0002AB0C /* Delay.swift */,
+				8F59DC921D300C230002AB0C /* NSOperation+State.swift */,
+				8F59DC941D300D360002AB0C /* NSOperationQueue+Delay.swift */,
 				8FD874681C76150900181FA6 /* Execution.h */,
 				8FD8746A1C76150900181FA6 /* Info.plist */,
 			);
@@ -96,6 +134,10 @@
 				8FD874831C76156D00181FA6 /* TaskTests.swift */,
 				8FD874851C7615C600181FA6 /* AsyncTests.swift */,
 				8FD874741C76150A00181FA6 /* ExecutionTests.swift */,
+				8FBEC3791D264DA9000B4A30 /* SpinLockTests.swift */,
+				8F59DC9C1D30EC470002AB0C /* DelayTests.swift */,
+				8FBEC37B1D264DBB000B4A30 /* AtomicTests.swift */,
+				8F59DC9E1D3115EB0002AB0C /* QueueTests.swift */,
 				8FD874761C76150A00181FA6 /* Info.plist */,
 			);
 			path = ExecutionTests;
@@ -209,9 +251,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F59DC971D300E0B0002AB0C /* Delay.swift in Sources */,
 				8FD875021C76260800181FA6 /* FloatAnimator.swift in Sources */,
 				8FD874821C76151D00181FA6 /* Task.swift in Sources */,
+				8F59DC991D30D2C00002AB0C /* Timer.swift in Sources */,
+				8F59DC931D300C230002AB0C /* NSOperation+State.swift in Sources */,
+				8F59DC9B1D30D6B70002AB0C /* Synchronized.swift in Sources */,
+				8FBEC3721D25802B000B4A30 /* Semaphore.swift in Sources */,
+				8F59DC951D300D360002AB0C /* NSOperationQueue+Delay.swift in Sources */,
 				8FD874811C76151D00181FA6 /* Async.swift in Sources */,
+				8FBEC3781D264C54000B4A30 /* Atomic.swift in Sources */,
+				8FBEC3741D2645F7000B4A30 /* Lock.swift in Sources */,
+				8FBEC3761D264C36000B4A30 /* SpinLock.swift in Sources */,
+				8FBEC3701D2576BD000B4A30 /* Queue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,9 +271,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FBEC37A1D264DA9000B4A30 /* SpinLockTests.swift in Sources */,
+				8FBEC37C1D264DBB000B4A30 /* AtomicTests.swift in Sources */,
 				8FD874841C76156D00181FA6 /* TaskTests.swift in Sources */,
 				8FD874751C76150A00181FA6 /* ExecutionTests.swift in Sources */,
 				8FD874861C7615C600181FA6 /* AsyncTests.swift in Sources */,
+				8F59DC9F1D3115EB0002AB0C /* QueueTests.swift in Sources */,
+				8F59DC9D1D30EC470002AB0C /* DelayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

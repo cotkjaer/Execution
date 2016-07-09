@@ -19,7 +19,7 @@ class AsyncTests: XCTestCase
         
         delay(0.2) {
             
-            counter++
+            counter += 1
             
             XCTAssertGreaterThan(counter, 1)
             
@@ -28,7 +28,7 @@ class AsyncTests: XCTestCase
         
         XCTAssertEqual(counter, 0)
         
-        counter++
+        counter += 1
 
         XCTAssertEqual(counter, 1)
 

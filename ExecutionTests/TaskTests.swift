@@ -15,7 +15,7 @@ class TaskTests: XCTestCase
     {
         var runCounter = 0
 
-        let task = Task({ runCounter++ })
+        let task = Task({ runCounter += 1 })
 
         XCTAssertEqual(runCounter, 0)
         
@@ -32,7 +32,7 @@ class TaskTests: XCTestCase
     {
         var runCounter = 0
         
-        let task = Task({ runCounter++ })
+        let task = Task({ runCounter += 1 })
         
         XCTAssertEqual(runCounter, 0)
         
@@ -63,7 +63,7 @@ class TaskTests: XCTestCase
     {
         var runCounter = 0
         
-        let task = Task({ runCounter++ })
+        let task = Task({ runCounter += 1 })
         
         XCTAssertEqual(runCounter, 0)
         
@@ -101,7 +101,7 @@ class TaskTests: XCTestCase
     {
         var runCounter = 0
         
-        let task = Task({ runCounter++ })
+        let task = Task({ runCounter += 1 })
         
         XCTAssertEqual(runCounter, 0)
         
@@ -134,7 +134,7 @@ class TaskTests: XCTestCase
     {
         var runCounter = 0
         
-        let task = Task({ runCounter++ })
+        let task = Task({ runCounter += 1 })
         
         XCTAssertEqual(runCounter, 0)
         
@@ -178,8 +178,10 @@ class TaskTests: XCTestCase
         let fulfillTask = Task({ expectation.fulfill() })
         
         let task = Task({
-            runCounter++; XCTAssertEqual(runCounter, 1)
-            fulfillTask.reschedule(1) }
+            runCounter += 1
+            XCTAssertEqual(runCounter, 1)
+            fulfillTask.reschedule(1)
+            }
         )
         
         task.reschedule(100)
