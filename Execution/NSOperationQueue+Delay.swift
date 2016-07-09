@@ -19,7 +19,7 @@ extension NSOperationQueue
  */
     public func addOperation(operation: NSOperation, withDelay seconds: Double)
     {
-        if let delayOperation = SimpleDelayOperation(seconds: seconds)
+        if let delayOperation = DelayOperation(interval: seconds)
         {
             operation.addDependency(delayOperation)
             
@@ -34,23 +34,33 @@ extension NSOperationQueue
 
 // MARK: - DelayOperation
 
-private class SimpleDelayOperation : NSOperation
+/// Simple synchronous NSOperation that will sleep for the given interval
+private class DelayOperation : NSOperation
 {
-    let seconds : Double
+    let microseconds : useconds_t
     
-    init?(seconds: Double)
+    /**
+    - parameter interval: Number of seconds to sleep
+    - note : Returns nil if `interval < 0.001`
+     */
+    init?(interval: Double)
     {
-        guard seconds > 0 else { return nil }
-        
-        self.seconds = seconds
+        guard interval > 0.001 else { return nil }
+
+        microseconds = useconds_t(interval * 1_000_000)
+    }
+    
+    init(milliseconds: UInt)
+    {
+        microseconds = useconds_t(milliseconds * 1_000)
     }
     
     final override var asynchronous : Bool  { return false }
 
     final override func main()
     {
-        let s : useconds_t = useconds_t(seconds * 1_000_000)
-        usleep(s)
-//        sleep(seconds)
+        guard microseconds > 1000 else { return }
+        
+        usleep(microseconds)
     }
 }

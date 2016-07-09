@@ -14,6 +14,7 @@
 		8F59DC9B1D30D6B70002AB0C /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC9A1D30D6B70002AB0C /* Synchronized.swift */; };
 		8F59DC9D1D30EC470002AB0C /* DelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC9C1D30EC470002AB0C /* DelayTests.swift */; };
 		8F59DC9F1D3115EB0002AB0C /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DC9E1D3115EB0002AB0C /* QueueTests.swift */; };
+		8F59DCA11D3124AB0002AB0C /* NSBlockOperation+Completion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F59DCA01D3124AB0002AB0C /* NSBlockOperation+Completion.swift */; };
 		8FBEC3701D2576BD000B4A30 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC36F1D2576BD000B4A30 /* Queue.swift */; };
 		8FBEC3721D25802B000B4A30 /* Semaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC3711D25802B000B4A30 /* Semaphore.swift */; };
 		8FBEC3741D2645F7000B4A30 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEC3731D2645F7000B4A30 /* Lock.swift */; };
@@ -49,6 +50,7 @@
 		8F59DC9A1D30D6B70002AB0C /* Synchronized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronized.swift; sourceTree = "<group>"; };
 		8F59DC9C1D30EC470002AB0C /* DelayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelayTests.swift; sourceTree = "<group>"; };
 		8F59DC9E1D3115EB0002AB0C /* QueueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
+		8F59DCA01D3124AB0002AB0C /* NSBlockOperation+Completion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBlockOperation+Completion.swift"; sourceTree = "<group>"; };
 		8FBEC36F1D2576BD000B4A30 /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		8FBEC3711D25802B000B4A30 /* Semaphore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Semaphore.swift; sourceTree = "<group>"; };
 		8FBEC3731D2645F7000B4A30 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				8F59DC961D300E0B0002AB0C /* Delay.swift */,
 				8F59DC921D300C230002AB0C /* NSOperation+State.swift */,
 				8F59DC941D300D360002AB0C /* NSOperationQueue+Delay.swift */,
+				8F59DCA01D3124AB0002AB0C /* NSBlockOperation+Completion.swift */,
 				8FD874681C76150900181FA6 /* Execution.h */,
 				8FD8746A1C76150900181FA6 /* Info.plist */,
 			);
@@ -259,6 +262,7 @@
 				8F59DC9B1D30D6B70002AB0C /* Synchronized.swift in Sources */,
 				8FBEC3721D25802B000B4A30 /* Semaphore.swift in Sources */,
 				8F59DC951D300D360002AB0C /* NSOperationQueue+Delay.swift in Sources */,
+				8F59DCA11D3124AB0002AB0C /* NSBlockOperation+Completion.swift in Sources */,
 				8FD874811C76151D00181FA6 /* Async.swift in Sources */,
 				8FBEC3781D264C54000B4A30 /* Atomic.swift in Sources */,
 				8FBEC3741D2645F7000B4A30 /* Lock.swift in Sources */,

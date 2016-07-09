@@ -84,4 +84,44 @@ class SpinLockTests: XCTestCase
             XCTAssertEqual(res + 1 , val)
         }
     }
+    
+    func test_lock_protected_increment()
+    {
+        let queue = NSOperationQueue()
+        queue.maxConcurrentOperationCount = 100
+        
+        let expect = expectationWithDescription("operation should be called")
+        
+        let lock = SpinLock()
+        
+        var i = 0
+        
+        let count = 1000
+        
+        var operations = (0..<count).map({ _ in NSBlockOperation(block:{
+            lock.lock()
+            i += 1
+            lock.unlock()
+        })})
+
+        lock.lock()
+        
+        let fulfillOperation = NSBlockOperation(block: { expect.fulfill() })
+        
+        operations.forEach { fulfillOperation.addDependency($0) }
+        
+        operations.append(fulfillOperation)
+        
+        queue.addOperations(operations, waitUntilFinished: false)
+        
+        XCTAssertEqual(i, 0)
+        
+        lock.unlock()
+        
+        waitForExpectationsWithTimeout(10)
+        { (error) in
+            XCTAssertNil(error)
+            XCTAssertEqual(i, count)
+        }
+    }
 }

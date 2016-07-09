@@ -11,6 +11,37 @@ import XCTest
 
 class DelayTests: XCTestCase
 {
+    func test_add_with_negative_delay()
+    {
+        let queue = NSOperationQueue()
+        
+        let expect = expectationWithDescription("operation should be called")
+
+        queue.addOperation(NSBlockOperation(block:{ expect.fulfill() }), withDelay: -1)
+        
+        waitForExpectationsWithTimeout(0.01)
+        { (error) in
+            
+            XCTAssertNil(error)
+        }
+    }
+    
+    
+    func test_add_with_zero_delay()
+    {
+        let queue = NSOperationQueue()
+        
+        let expect = expectationWithDescription("operation should be called")
+        
+        queue.addOperation(NSBlockOperation(block:{ expect.fulfill() }), withDelay: 0)
+        
+        waitForExpectationsWithTimeout(0.01)
+        { (error) in
+            
+            XCTAssertNil(error)
+        }
+    }
+    
     func test_addDelayed()
     {
         let queue = NSOperationQueue()
