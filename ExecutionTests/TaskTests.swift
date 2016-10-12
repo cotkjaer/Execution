@@ -45,13 +45,13 @@ class TaskTests: XCTestCase
         XCTAssertEqual(runCounter, 0)
         XCTAssertEqual(task.scheduled, 5)
         
-        let expectation = expectationWithDescription("scheduled closure did run")
+        let expectation = self.expectation(description: "scheduled closure did run")
         
         let fulfillTask = Task({ XCTAssertEqual(runCounter, 5); XCTAssertEqual(task.scheduled, 0); expectation.fulfill() })
         
         fulfillTask.schedule(2)
         
-        waitForExpectationsWithTimeout(3) { error in
+        waitForExpectations(timeout: 3) { error in
             
             if let error = error {
                 print("Error: \(error.localizedDescription)")
@@ -83,13 +83,13 @@ class TaskTests: XCTestCase
         XCTAssertEqual(runCounter, 0)
         XCTAssertEqual(task.scheduled, 5)
 
-        let expectation = expectationWithDescription("scheduled closure did run")
+        let expectation = self.expectation(description: "scheduled closure did run")
         
         let fulfillTask = Task({ XCTAssertEqual(runCounter, 4); XCTAssertEqual(task.scheduled, 0); expectation.fulfill() })
         
         fulfillTask.schedule(5)
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             
             if let error = error {
                 print("Error: \(error.localizedDescription)")
@@ -106,23 +106,23 @@ class TaskTests: XCTestCase
         XCTAssertEqual(runCounter, 0)
         
         
-        task.schedule(NSDate().dateByAddingTimeInterval(-2))
-        task.schedule(NSDate().dateByAddingTimeInterval(0.4))
-        task.schedule(NSDate().dateByAddingTimeInterval(0.4))
-        task.schedule(NSDate().dateByAddingTimeInterval(0.4))
-        task.schedule(NSDate().dateByAddingTimeInterval(0.4))
+        task.schedule(Date().addingTimeInterval(-2))
+        task.schedule(Date().addingTimeInterval(0.4))
+        task.schedule(Date().addingTimeInterval(0.4))
+        task.schedule(Date().addingTimeInterval(0.4))
+        task.schedule(Date().addingTimeInterval(0.4))
         
         XCTAssertEqual(runCounter, 0)
         
         XCTAssertEqual(task.scheduled, 5)
         
-        let expectation = expectationWithDescription("scheduled closure did run")
+        let expectation = self.expectation(description: "scheduled closure did run")
         
         let fulfillTask = Task({ XCTAssertEqual(runCounter, 5); XCTAssertEqual(task.scheduled, 0); expectation.fulfill() })
         
         fulfillTask.schedule(2)
         
-        waitForExpectationsWithTimeout(3) { error in
+        waitForExpectations(timeout: 3) { error in
             
             if let error = error {
                 print("Error: \(error.localizedDescription)")
@@ -155,13 +155,13 @@ class TaskTests: XCTestCase
         task.schedule(0.1)
         task.schedule(0.2)
 
-        let expectation = expectationWithDescription("scheduled closure did run")
+        let expectation = self.expectation(description: "scheduled closure did run")
 
         let fulfillTask = Task({ XCTAssertEqual(runCounter, 3); expectation.fulfill() })
         
         fulfillTask.schedule(2)
         
-        waitForExpectationsWithTimeout(3) { error in
+        waitForExpectations(timeout: 3) { error in
             
             if let error = error {
                 print("Error: \(error.localizedDescription)")
@@ -171,7 +171,7 @@ class TaskTests: XCTestCase
 
     func testReschedule()
     {
-        let expectation = expectationWithDescription("scheduled closure did run")
+        let expectation = self.expectation(description: "scheduled closure did run")
         
         var runCounter = 0
         
@@ -201,7 +201,7 @@ class TaskTests: XCTestCase
         
         Task({ XCTFail("Must not run") }).reschedule(1)
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             
             if let error = error {
                 print("Error: \(error.localizedDescription)")

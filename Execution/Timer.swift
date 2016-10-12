@@ -7,28 +7,28 @@
 //
 
 import Foundation
-
-public class Timer
+/*
+open class Timer
 {
-    private let delay : Delay
-    private let queue : dispatch_queue_t
-    private let timer : dispatch_source_t
-    private let leeway : UInt64
-    private let completion : (Bool) -> ()
+    fileprivate let delay : Delay
+    fileprivate let queue : Dispatch.DispatchQueue
+    fileprivate let timer : DispatchSource
+    fileprivate let leeway : UInt64
+    fileprivate let completion : (Bool) -> ()
     
     
-    internal init(delay: Delay, leeway: Int = 1_000_000, completion: (completed: Bool) -> ())
+    internal init(delay: Delay, leeway: Int = 1_000_000, completion: @escaping (_ completed: Bool) -> ())
     {
         self.delay = delay
         self.leeway = UInt64(leeway)
         self.completion = completion
         
-        self.queue = dispatch_queue_create(NSUUID().UUIDString, dispatch_queue_attr_make_with_qos_class( DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT, QOS_MIN_RELATIVE_PRIORITY ))
+        self.queue = DispatchQueue(label: UUID().uuidString, attributes: dispatch_queue_attr_make_with_qos_class( DispatchQueue.attributes(), DispatchQoS.QoSClass.default, QOS_MIN_RELATIVE_PRIORITY ))
         
-        self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue)
+        self.timer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: queue) /*Migrator FIXME: Use DispatchSourceTimer to avoid the cast*/ as! DispatchSource
         
-        dispatch_source_set_cancel_handler(timer) { self.cancel() }
-        dispatch_source_set_event_handler(timer) { self.finish() }
+        timer.setCancelHandler { self.cancel() }
+        timer.setEventHandler { self.finish() }
     }
     
     /**
@@ -41,9 +41,9 @@ public class Timer
      This is partly from a energy standpoint as nanosecond
      accuracy is costly.
      */
-    public convenience init(interval: NSTimeInterval, leeway: Int = 1_000_000, completion: (Bool) -> ())
+    public convenience init(interval: TimeInterval, leeway: Int = 1_000_000, completion: (Bool) -> ())
     {
-        self.init(delay: .By(interval), leeway: leeway, completion: completion)
+        self.init(delay: .by(interval), leeway: leeway, completion: completion)
     }
     
     /**
@@ -56,13 +56,13 @@ public class Timer
      This is partly from a energy standpoint as nanosecond
      accuracy is costly.
      */
-    public convenience init(date: NSDate, leeway: Int = 1_000_000, completion: (Bool) -> ())
+    public convenience init(date: Date, leeway: Int = 1_000_000, completion: (Bool) -> ())
     {
-        self.init(delay: .Until(date), leeway: leeway, completion: completion)
+        self.init(delay: .until(date), leeway: leeway, completion: completion)
     }
 
     
-    public func start()
+    open func start()
     {
         guard !cancelled else { return }
         
@@ -72,34 +72,34 @@ public class Timer
         
         guard interval > 0 else { finish(); return }
         
-        dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, Int64(interval * Double(NSEC_PER_SEC))), DISPATCH_TIME_FOREVER, leeway)
+        timer.setTimer(start: DispatchTime.now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), interval: DispatchTime.distantFuture, leeway: leeway)
         
-        dispatch_resume(timer)
+        timer.resume()
     }
     
-    public var cancelled : Bool { return dispatch_source_testcancel( timer ) != 0 }
+    open var cancelled : Bool { return timer.isCancelled != 0 }
     
-    public var cancelHandler : (() -> ())?
+    open var cancelHandler : (() -> ())?
         {
         didSet
         {
-            dispatch_source_set_cancel_handler(timer, cancelHandler)
+            timer.setCancelHandler(handler: cancelHandler)
         }
     }
     
-    private func handleCancel()
+    fileprivate func handleCancel()
     {
         cancelHandler?()
     }
     
-    public func cancel()
+    open func cancel()
     {
-        dispatch_source_cancel(timer)
+        timer.cancel()
     }
     
-    public private(set) var finished : Bool = false
+    open fileprivate(set) var finished : Bool = false
     
-    private func finish()
+    fileprivate func finish()
     {
         let completed = !cancelled
         
@@ -108,3 +108,4 @@ public class Timer
         completion(completed)
     }
 }
+*/

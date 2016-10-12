@@ -8,12 +8,13 @@
 
 import Foundation
 
+/*
 /**
  A Swift wrapper for GCD dispatch semaphores
  */
-public class CountingSemaphore
+open class CountingSemaphore
 {
-    private var dispatch_semaphore: dispatch_semaphore_t
+    fileprivate var dispatch_semaphore: DispatchSemaphore
     
     /** Initialize the semaphore.
      
@@ -25,16 +26,17 @@ public class CountingSemaphore
     */
     public init(value: UInt)
     {
-        dispatch_semaphore = dispatch_semaphore_create(Int(value))
+        dispatch_semaphore = DispatchSemaphore(value: Int(value))
     }
     
-    private func execute(timeout: UInt64, block: () -> ()) -> Bool
+    fileprivate func execute(_ timeout: UInt64, block: () -> ()) -> Bool
     {
-        if dispatch_semaphore_wait( dispatch_semaphore, timeout ) == 0
+        fatalError()
+        if dispatch_semaphore.wait(timeout: DispatchTime(uptimeNanoseconds: timeout) ) == 0
         {
             block()
             
-            dispatch_semaphore_signal( dispatch_semaphore )
+            dispatch_semaphore.signal()
             
             return true
         }
@@ -42,9 +44,9 @@ public class CountingSemaphore
         return false
     }
     
-    public func now(block: ()->()) -> Bool
+    open func now(_ block: ()->()) -> Bool
     {
-        return execute(DISPATCH_TIME_NOW, block: block)
+        return execute(DispatchTime.now(), block: block)
         
 //        guard dispatch_semaphore_wait( dispatch_semaphore, DISPATCH_TIME_NOW ) == 0 else { return false }
 //        
@@ -55,9 +57,9 @@ public class CountingSemaphore
 //        return true
     }
     
-    public func wait(block: ()->())
+    open func wait(_ block: ()->())
     {
-        execute(DISPATCH_TIME_FOREVER, block: block)
+        execute(DispatchTime.distantFuture, block: block)
 //        
 //        dispatch_semaphore_wait( dispatch_semaphore, DISPATCH_TIME_FOREVER )
 //        
@@ -72,3 +74,4 @@ public class CountingSemaphore
 //    }
     
 }
+*/

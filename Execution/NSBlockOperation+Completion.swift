@@ -10,22 +10,22 @@ import Foundation
 
 // MARK: - Completion
 
-extension NSBlockOperation
+extension BlockOperation
 {
-    public convenience init(block: () -> (), completion: ((cancelled: Bool) -> ())?)
+    public convenience init(block: @escaping () -> (), completion: ((_ cancelled: Bool) -> ())?)
     {
         self.init(block: block)
-        completionBlock = { completion?(cancelled: self.cancelled) }
+        completionBlock = { completion?(self.isCancelled) }
     }
 }
 
 // MARK: - <#comment#>
 
-extension NSOperationQueue
+extension OperationQueue
 {
-    public func addOperationWithBlock(block: () -> (), completion: ((cancelled: Bool) -> ())?)
+    public func addOperationWithBlock(_ block: @escaping () -> (), completion: ((_ cancelled: Bool) -> ())?)
     {
-        addOperation(NSBlockOperation(block: block, completion: completion))
+        addOperation(BlockOperation(block: block, completion: completion))
     }
 }
 

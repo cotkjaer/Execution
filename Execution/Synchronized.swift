@@ -8,14 +8,14 @@
 
 import Foundation
 
-func synchronized(object: AnyObject, closure: () -> ())
+func synchronized(_ object: AnyObject, closure: () -> ())
 {
     objc_sync_enter(object)
     closure()
     objc_sync_exit(object)
 }
 
-func synchronized<T>(object: AnyObject, closure: () -> T) -> T
+func synchronized<T>(_ object: AnyObject, closure: () -> T) -> T
 {
     objc_sync_enter(object)
     let result = closure()

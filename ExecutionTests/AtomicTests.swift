@@ -36,7 +36,7 @@ class AtomicTests: XCTestCase {
         XCTAssertEqual(ai.value, 1)
         
         ai.with { (v) in
-            v.memory += 2
+            v.pointee += 2
         }
         
         XCTAssertEqual(ai.value, 3)
@@ -44,7 +44,7 @@ class AtomicTests: XCTestCase {
     
     func testPerformanceExample()
     {
-        self.measureBlock { for _ in 0..<1000 { let _ = Atomic(1) } }
+        self.measure { for _ in 0..<1000 { let _ = Atomic(1) } }
     }
 
 }

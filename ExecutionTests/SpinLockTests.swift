@@ -48,11 +48,13 @@ class SpinLockTests: XCTestCase
         
         XCTAssertTrue(lock.tryLock())
         
-        let queue = dispatch_get_global_queue(0, 0)
+        let queue = DispatchQueue.global(qos: .userInitiated)
         
-        let expect = expectationWithDescription("operation should be called")
+//        let queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.)
+        
+        let expect = expectation(description: "operation should be called")
 
-        dispatch_barrier_async(queue, {
+        queue.async(flags: .barrier, execute: {
             
             print ("before update")
             lock.execute({ val += 1 })
@@ -60,7 +62,7 @@ class SpinLockTests: XCTestCase
             
         } )
 
-        dispatch_barrier_async(queue, {
+        queue.async(flags: .barrier, execute: {
             
             print ("before fullfill")
             
@@ -78,7 +80,7 @@ class SpinLockTests: XCTestCase
 
         lock.unlock()
 
-        waitForExpectationsWithTimeout(10) { (error) in
+        waitForExpectations(timeout: 10) { (error) in
             XCTAssertNil(error)
             
             XCTAssertEqual(res + 1 , val)
@@ -87,10 +89,10 @@ class SpinLockTests: XCTestCase
     
     func test_lock_protected_increment()
     {
-        let queue = NSOperationQueue()
+        let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 100
         
-        let expect = expectationWithDescription("operation should be called")
+        let expect = expectation(description: "operation should be called")
         
         let lock = SpinLock()
         
@@ -98,7 +100,7 @@ class SpinLockTests: XCTestCase
         
         let count = 1000
         
-        var operations = (0..<count).map({ _ in NSBlockOperation(block:{
+        var operations = (0..<count).map({ _ in BlockOperation(block:{
             lock.lock()
             i += 1
             lock.unlock()
@@ -106,7 +108,7 @@ class SpinLockTests: XCTestCase
 
         lock.lock()
         
-        let fulfillOperation = NSBlockOperation(block: { expect.fulfill() })
+        let fulfillOperation = BlockOperation(block: { expect.fulfill() })
         
         operations.forEach { fulfillOperation.addDependency($0) }
         
@@ -118,7 +120,7 @@ class SpinLockTests: XCTestCase
         
         lock.unlock()
         
-        waitForExpectationsWithTimeout(10)
+        waitForExpectations(timeout: 10)
         { (error) in
             XCTAssertNil(error)
             XCTAssertEqual(i, count)

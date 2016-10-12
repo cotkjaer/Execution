@@ -8,35 +8,36 @@
 
 import Foundation
 
-public enum ExecutionPriority
-{
-    case High
-    case Default
-    case Low
-    case Lowest
-    
-    private var dispatch_priority : dispatch_queue_priority_t
-        {
-            switch self
-            {
-            case .High: return DISPATCH_QUEUE_PRIORITY_HIGH
-            case .Default: return DISPATCH_QUEUE_PRIORITY_DEFAULT
-            case .Low: return DISPATCH_QUEUE_PRIORITY_LOW
-            case .Lowest: return DISPATCH_QUEUE_PRIORITY_BACKGROUND
-            }
-    }
-    
-    func queue() -> dispatch_queue_t
-    {
-        return dispatch_get_global_queue(dispatch_priority, 0)
-    }
-}
+/*
+//public enum ExecutionPriority
+//{
+//    case high
+//    case `default`
+//    case low
+//    case lowest
+//    
+//    fileprivate var dispatch_priority : dispatch_queue_priority_t
+//        {
+//            switch self
+//            {
+//            case .high: return DispatchQueue.GlobalQueuePriority.high
+//            case .default: return DispatchQueue.GlobalQueuePriority.default
+//            case .low: return DispatchQueue.GlobalQueuePriority.low
+//            case .lowest: return DispatchQueue.GlobalQueuePriority.background
+//            }
+//    }
+//    
+//    func queue() -> Dispatch.DispatchQueue
+//    {
+//        return DispatchQueue.global(priority: dispatch_priority)
+//    }
+//}
 
 // MARK: - Delay
 
-public extension dispatch_time_t
+public extension DispatchTime
 {
-    func delay(delay: Double) -> dispatch_time_t
+    func delay(_ delay: Double) -> DispatchTime
     {
         if delay < 0
         {
@@ -44,44 +45,46 @@ public extension dispatch_time_t
         }
         else
         {
-            return dispatch_time(self, Int64(delay * Double(NSEC_PER_SEC)))
+            return self + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         }
     }
 }
+*/
 
-public func delay(delay:Double, priority: ExecutionPriority? = nil, closure:()->())
+// MARK: - <#comment#>
+
+extension DispatchQueue
 {
-    let queue : dispatch_queue_t = priority?.queue() ?? dispatch_get_main_queue()
-    
-    if delay < 0.001
+    func async(after: Double, execute closure: @escaping ()->())
     {
-        dispatch_async(queue, closure)
-    }
-    else
-    {
-        let when = DISPATCH_TIME_NOW.delay(delay)
+        let when = DispatchTime.now() + after
         
-        dispatch_after(
-            when,
-            queue,
-            //        priority?.queue() ?? dispatch_get_main_queue(),
-            closure)
+        asyncAfter(deadline: when, execute: closure)
     }
 }
 
-public func background(delay d: Double = 0, priority: ExecutionPriority = .Default, closure:()->())
+
+private func delay(_ time: Double, onQueue queue: DispatchQueue = DispatchQueue.main, closure: @escaping ()->())
 {
-    delay(d, priority: priority, closure: closure)
+    queue.async(after: time, execute: closure)
 }
 
-public func foreground(delay d: Double = 0, closure:()->())
+public func delay(_ time: Double, closure:@escaping ()->())
 {
-    delay(d, closure: closure)
+    delay(time, onQueue: DispatchQueue.main, closure: closure)
 }
 
-public func async(priority: ExecutionPriority? = nil, closure:()->())
+public func background(delay d: Double = 0, priority: DispatchQoS = .default, closure:@escaping ()->())
 {
-    let queue : dispatch_queue_t = priority?.queue() ?? dispatch_get_main_queue()
+    delay(d, onQueue: DispatchQueue.global(qos: .userInitiated), closure: closure)
+}
 
-    dispatch_async(queue, closure)
+public func foreground(delay d: Double = 0, closure:@escaping ()->())
+{
+    delay(d, onQueue: DispatchQueue.main, closure: closure)
+}
+
+public func async(closure: @escaping ()->())
+{
+    DispatchQueue.main.async(execute: closure)
 }

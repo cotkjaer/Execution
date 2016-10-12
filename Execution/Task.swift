@@ -9,20 +9,20 @@
 import Foundation
 
 /// A class that encapsulates a closure and enables scheduling
-public class Task
+open class Task
 {
     // The captured by the block dispatched to GCD needs to match this secret to alow execution of the closure
-    private var secret = 0
+    fileprivate var secret = 0
     
     ///The number of scheduled executions
-    private(set) var scheduled = 0
+    fileprivate(set) var scheduled = 0
     
     ///The captured closure
-    private var closure : (() -> ())
+    fileprivate var closure : (() -> ())
     
     /// Capture and retain a closure
     /// - parameter closure : closure to capture
-    public init(_ closure:()->())
+    public init(_ closure:@escaping ()->())
     {
         self.closure = closure
     }
@@ -31,7 +31,7 @@ public class Task
     /// - parameter delay : time to delay execution of _closure_
     /// - parameter closure : closure to capture
     /// If the delay is negative the task is scheduled to execute in 0.1 seconds
-    public convenience init(delay:Double, closure:()->())
+    public convenience init(delay:Double, closure:@escaping ()->())
     {
         self.init(closure)
         schedule(delay)
@@ -41,14 +41,14 @@ public class Task
     /// - parameter date : the date to wait for before executing _closure_
     /// - parameter closure : closure to capture
     /// If the date is in the past the closure is scheduled to execute in 0.1 seconds
-    public convenience init(date:NSDate, closure:()->())
+    public convenience init(date:Date, closure:@escaping ()->())
     {
         self.init(closure)
         schedule(date)
     }
     
     /// Unschedule all schedulled executions of captured closure
-    public func unschedule()
+    open func unschedule()
     {
         scheduled = 0
         secret += 1
@@ -59,11 +59,15 @@ public class Task
     /// - parameter after : time to delay execution of task
     ///
     /// If the delay is negative the task is scheduled to execute in 0.1 seconds
-    public func schedule(after: Double)
+    open func schedule(_ after: Double)
     {
         let capturedSecret = secret
         
-        delay(max(0.1, after)) { [weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
+        let deadlineTime = DispatchTime.now() + after
+
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
+        
+//        DispatchQueue.main.async/*delay(max(0.1, after))*/ { [weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
 
         scheduled += 1
     }
@@ -73,7 +77,7 @@ public class Task
     /// - parameter after : time to delay execution of task
     ///
     /// If the delay is negative the task is scheduled to execute in 0.1 seconds
-    public func scheduleIfNeeded(after: Double = 0.1)
+    open func scheduleIfNeeded(_ after: Double = 0.1)
     {
         if scheduled < 1
         {
@@ -86,7 +90,7 @@ public class Task
     /// - parameter after : time to delay execution of task
     ///
     /// If the delay is negative the task is scheduled to execute in 0.1 seconds
-    public func reschedule(after: Double)
+    open func reschedule(_ after: Double)
     {
         unschedule()
         
@@ -99,7 +103,7 @@ public class Task
     /// - parameter date : the date to wait for before executing task
     ///
     /// If the date is in the past the task is scheduled to execute in 0.1 seconds
-    public func schedule(date: NSDate)
+    open func schedule(_ date: Date)
     {
         schedule(max(0.1, date.timeIntervalSinceNow))
     }
@@ -109,7 +113,7 @@ public class Task
     /// - parameter date : the date to wait for before executing task
     ///
     /// If the date is in the past the task is scheduled to execute in 0.1 seconds
-    public func reschedule(date: NSDate)
+    open func reschedule(_ date: Date)
     {
         unschedule()
         
@@ -117,7 +121,7 @@ public class Task
     }
     
     /// Executes the closure now
-    public func execute()
+    open func execute()
     {
         closure()
     }

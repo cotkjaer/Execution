@@ -13,13 +13,13 @@ class DelayTests: XCTestCase
 {
     func test_add_with_negative_delay()
     {
-        let queue = NSOperationQueue()
+        let queue = OperationQueue()
         
-        let expect = expectationWithDescription("operation should be called")
+        let expect = expectation(description: "operation should be called")
 
-        queue.addOperation(NSBlockOperation(block:{ expect.fulfill() }), withDelay: -1)
+        queue.addOperation(BlockOperation(block:{ expect.fulfill() }), withDelay: -1)
         
-        waitForExpectationsWithTimeout(0.01)
+        waitForExpectations(timeout: 0.01)
         { (error) in
             
             XCTAssertNil(error)
@@ -29,13 +29,13 @@ class DelayTests: XCTestCase
     
     func test_add_with_zero_delay()
     {
-        let queue = NSOperationQueue()
+        let queue = OperationQueue()
         
-        let expect = expectationWithDescription("operation should be called")
+        let expect = expectation(description: "operation should be called")
         
-        queue.addOperation(NSBlockOperation(block:{ expect.fulfill() }), withDelay: 0)
+        queue.addOperation(BlockOperation(block:{ expect.fulfill() }), withDelay: 0)
         
-        waitForExpectationsWithTimeout(0.01)
+        waitForExpectations(timeout: 0.01)
         { (error) in
             
             XCTAssertNil(error)
@@ -44,21 +44,21 @@ class DelayTests: XCTestCase
     
     func test_addDelayed()
     {
-        let queue = NSOperationQueue()
+        let queue = OperationQueue()
         
-        let expect = expectationWithDescription("operation should be called")
+        let expect = expectation(description: "operation should be called")
         
         var i = 0
 
-        queue.addOperation(NSBlockOperation(block: { i = 3 }), withDelay: 0.01)
+        queue.addOperation(BlockOperation(block: { i = 3 }), withDelay: 0.01)
 
-        queue.addOperation(NSBlockOperation(block: { XCTAssertEqual(i, 3); i = 1 }), withDelay: 0.02)
+        queue.addOperation(BlockOperation(block: { XCTAssertEqual(i, 3); i = 1 }), withDelay: 0.02)
 
-        queue.addOperation(NSBlockOperation(block: { expect.fulfill() }), withDelay: 0.03)
+        queue.addOperation(BlockOperation(block: { expect.fulfill() }), withDelay: 0.03)
 
-        queue.addOperation(NSBlockOperation(block: { XCTAssertEqual(i, 0) }))
+        queue.addOperation(BlockOperation(block: { XCTAssertEqual(i, 0) }))
 
-        waitForExpectationsWithTimeout(1)
+        waitForExpectations(timeout: 1)
         { (error) in
         
             XCTAssertNil(error)

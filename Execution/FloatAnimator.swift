@@ -6,25 +6,25 @@
 //  Copyright © 2015 Christian Otkjær. All rights reserved.
 //
 
-public class FloatAnimator
+open class FloatAnimator
 {
-    private let StepSize : Float = 1.0/30.0
+    fileprivate let StepSize : Float = 1.0/30.0
     
-    private var tasks = Array<Task>()
+    fileprivate var tasks = Array<Task>()
     
     var setter : ((Float) -> ())!
     var getter : (() -> Float)!
 
-    public init(setter: Float -> () = { _ in }, getter: () -> Float = { return 0 })
+    public init(setter: @escaping (Float) -> () = { _ in }, getter: @escaping () -> Float = { return 0 })
     {
         self.getter = getter
         self.setter = setter
     }
     
-    public func animateFloat(to: Float, duration: Double)
+    open func animateFloat(_ to: Float, duration: Double)
     {
         tasks.forEach { $0.unschedule() }
-        tasks.removeAll(keepCapacity: true)
+        tasks.removeAll(keepingCapacity: true)
         
         let T = Float(max(0.1, duration))
         let from = getter()
@@ -32,6 +32,6 @@ public class FloatAnimator
         //liniear easing function
         let f = { (t: Float) -> Float in return (from * (T - t) + to * t) / T }
         
-        T.stride(to: 0, by: -StepSize).forEach { let v = f($0); self.tasks.append(Task(delay: Double($0), closure: { self.setter(v) })) }
+        stride(from: T, to: 0, by: -StepSize).forEach { let v = f($0); self.tasks.append(Task(delay: Double($0), closure: { self.setter(v) })) }
     }
 }

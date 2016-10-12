@@ -13,9 +13,9 @@ class QueueTests: XCTestCase
 {
     func test_add_operation_with_block_and_completion()
     {
-        let queue = NSOperationQueue()
+        let queue = OperationQueue()
         
-        let expect = expectationWithDescription("operation should be called")
+        let expect = expectation(description: "operation should be called")
         
         var i = 0
      
@@ -25,7 +25,7 @@ class QueueTests: XCTestCase
             expect.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10)
+        waitForExpectations(timeout: 10)
         { (error) in
             XCTAssertNil(error)
         }

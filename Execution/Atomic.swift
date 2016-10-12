@@ -10,17 +10,17 @@ import Foundation
 
 // MARK: - Blocking Atomic Wrapper
 
-public class Atomic<V>
+open class Atomic<V>
 {
-    private var lock = SpinLock()
-    private var _value : V
+    fileprivate var lock = SpinLock()
+    fileprivate var _value : V
     
     public init(_ value: V)
     {
         _value = value
     }
     
-    public var value : V
+    open var value : V
         {
         get
         {
@@ -39,7 +39,7 @@ public class Atomic<V>
         }
     }
     
-    public func with(block: (UnsafeMutablePointer<V>) -> ())
+    open func with(_ block: (UnsafeMutablePointer<V>) -> ())
     {
         lock.lock()
         
@@ -49,9 +49,9 @@ public class Atomic<V>
     }
 }
 
-extension Atomic where V : IntegerArithmeticType, V: IntegerLiteralConvertible
+extension Atomic where V : IntegerArithmetic, V: ExpressibleByIntegerLiteral
 {
-    public func increment(delta: V = 1) -> V
+    public func increment(_ delta: V = 1) -> V
     {
         lock.lock()
         defer { lock.unlock() }
@@ -61,7 +61,7 @@ extension Atomic where V : IntegerArithmeticType, V: IntegerLiteralConvertible
         return _value
     }
     
-    public func decrement(delta: V = 1) -> V
+    public func decrement(_ delta: V = 1) -> V
     {
         lock.lock()
         defer { lock.unlock() }
@@ -74,17 +74,17 @@ extension Atomic where V : IntegerArithmeticType, V: IntegerLiteralConvertible
 }
 
 
-public class NonblockingAtomic<V>
+open class NonblockingAtomic<V>
 {
-    private let queue = SerialQueue(name: NSUUID().UUIDString)
-    private var _value : V
+    fileprivate let queue = DispatchQueue(label: "UUID().uuidString", qos: .userInteractive)// SerialQueue(name: UUID().uuidString)
+    fileprivate var _value : V
     
     public init(_ value: V)
     {
         _value = value
     }
     
-    public var value : V
+    open var value : V
         {
         get
         {
@@ -101,15 +101,15 @@ public class NonblockingAtomic<V>
         }
     }
     
-    public func with(block: (UnsafeMutablePointer<V>) -> ())
+    open func with(_ block: @escaping (UnsafeMutablePointer<V>) -> ())
     {
         queue.async { block(&self._value) }
     }
 }
 
-extension NonblockingAtomic where V : IntegerArithmeticType, V: IntegerLiteralConvertible
+extension NonblockingAtomic where V : IntegerArithmetic, V: ExpressibleByIntegerLiteral
 {
-    public func increment(delta: V = 1) -> V
+    public func increment(_ delta: V = 1) -> V
     {
         var v = _value
         
@@ -118,7 +118,7 @@ extension NonblockingAtomic where V : IntegerArithmeticType, V: IntegerLiteralCo
         return v
     }
     
-    public func decrement(delta: V = 1) -> V
+    public func decrement(_ delta: V = 1) -> V
     {
         var v = _value
         

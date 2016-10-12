@@ -13,7 +13,7 @@ class AsyncTests: XCTestCase
 {
     func testDelay()
     {
-        let expectation = expectationWithDescription("delayed closure did run")
+        let expectation = self.expectation(description: "delayed closure did run")
 
         var counter = 0
         
@@ -32,7 +32,7 @@ class AsyncTests: XCTestCase
 
         XCTAssertEqual(counter, 1)
 
-        waitForExpectationsWithTimeout(1) { error in
+        waitForExpectations(timeout: 1) { error in
 
             if let error = error
             {

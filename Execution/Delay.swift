@@ -10,20 +10,20 @@ import Foundation
 
 public enum Delay
 {
-    case By(NSTimeInterval)
-    case Until(NSDate)
+    case by(TimeInterval)
+    case until(Date)
 }
 
 internal extension Delay
 {
-    var seconds: NSTimeInterval
+    var seconds: TimeInterval
     {
         switch self
         {
-        case .By(let seconds):
+        case .by(let seconds):
             return seconds
             
-        case .Until(let date):
+        case .until(let date):
             return max ( 0, date.timeIntervalSinceNow )
         }
     }
@@ -35,11 +35,11 @@ extension Delay: CustomStringConvertible
     {
         switch self
         {
-        case .By(let seconds):
+        case .by(let seconds):
             return "Delay for \(seconds) seconds"
             
-        case .Until(let date):
-            return "Delay until \(NSDateFormatter().stringFromDate(date)) \(seconds) seconds"
+        case .until(let date):
+            return "Delay until \(DateFormatter().string(from: date)) \(seconds) seconds"
         }
     }
 }

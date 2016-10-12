@@ -15,36 +15,36 @@ import Foundation
  
  Do NOT use when code may hold the lock for a substantial amount of time, or contention is common, as it will waste CPU time.
  */
-public class SpinLock
+open class SpinLock
 {
-    private var spinLock = OSSpinLock(OS_SPINLOCK_INIT)
+    fileprivate var spinLock = OSSpinLock(OS_SPINLOCK_INIT)
     
     /** Locks the spinlock if it would not block
      
      - returns: `true` if it took the lock successfully, `false` if the lock was already held by another thread.
      */
-    public func tryLock() -> Bool
+    open func tryLock() -> Bool
     {
         return OSSpinLockTry(&spinLock)
     }
     
     /** Locks the spinlock, blocks until the lock can be locked
      */
-    public func lock()
+    open func lock()
     {
         OSSpinLockLock(&spinLock)
     }
     
     /** Unlocks the spinlock
      */
-    public func unlock()
+    open func unlock()
     {
         OSSpinLockUnlock(&spinLock)
     }
     
     /** Locks, executes block, unlocks
      */
-    public func execute<T>(block: () -> T) -> T
+    open func execute<T>(_ block: () -> T) -> T
     {
         lock()
         

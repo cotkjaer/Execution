@@ -10,47 +10,47 @@ import Foundation
 
 // MARK: - State
 
-extension NSOperation
+extension Operation
 {
     public var state : State
     {
-        if cancelled
+        if isCancelled
         {
-            return .Cancelled
+            return .cancelled
         }
-        else if finished
+        else if isFinished
         {
-            return .Completed
+            return .completed
         }
-        else if executing
+        else if isExecuting
         {
-            return .Executing
+            return .executing
         }
-        else if ready
+        else if isReady
         {
-            return .Ready
+            return .ready
         }
         else
         {
-            return .Initial
+            return .initial
         }
     }
 
     public enum State: Int
     {
         // The initial state
-        case Initial
+        case initial
         
         // Ready to begin executing
-        case Ready
+        case ready
         
         // Operation is executing
-        case Executing
+        case executing
         
         // Operation has finished and was completed
-        case Completed
+        case completed
         
         // Operation was cancelled
-        case Cancelled
+        case cancelled
     }
 }
