@@ -15,9 +15,12 @@ import Foundation
  
  Do NOT use when code may hold the lock for a substantial amount of time, or contention is common, as it will waste CPU time.
  */
+
+import os
+
 open class SpinLock
 {
-    fileprivate var spinLock = OSSpinLock(OS_SPINLOCK_INIT)
+    fileprivate var spinLock = os_unfair_lock()//OSSpinLock(OS_SPINLOCK_INIT)
     
     /** Locks the spinlock if it would not block
      
@@ -25,21 +28,24 @@ open class SpinLock
      */
     open func tryLock() -> Bool
     {
-        return OSSpinLockTry(&spinLock)
+        return os_unfair_lock_trylock(&spinLock)
+//        return OSSpinLockTry(&spinLock)
     }
     
     /** Locks the spinlock, blocks until the lock can be locked
      */
     open func lock()
     {
-        OSSpinLockLock(&spinLock)
+        return os_unfair_lock_lock(&spinLock)
+//        OSSpinLockLock(&spinLock)
     }
     
     /** Unlocks the spinlock
      */
     open func unlock()
     {
-        OSSpinLockUnlock(&spinLock)
+        return os_unfair_lock_unlock(&spinLock)
+//        OSSpinLockUnlock(&spinLock)
     }
     
     /** Locks, executes block, unlocks

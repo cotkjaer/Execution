@@ -50,11 +50,11 @@ class DelayTests: XCTestCase
         
         var i = 0
 
-        queue.addOperation(BlockOperation(block: { i = 3 }), withDelay: 0.01)
+        queue.addOperation(BlockOperation(block: { i = 3 }), withDelay: 0.1)
 
-        queue.addOperation(BlockOperation(block: { XCTAssertEqual(i, 3); i = 1 }), withDelay: 0.02)
+        queue.addOperation(BlockOperation(block: { XCTAssertEqual(i, 3); i = 1 }), withDelay: 0.2)
 
-        queue.addOperation(BlockOperation(block: { expect.fulfill() }), withDelay: 0.03)
+        queue.addOperation(BlockOperation(block: { expect.fulfill() }), withDelay: 0.3)
 
         queue.addOperation(BlockOperation(block: { XCTAssertEqual(i, 0) }))
 

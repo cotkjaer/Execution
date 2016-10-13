@@ -44,13 +44,13 @@ class SpinLockTests: XCTestCase
         
         let res = lock.execute({ () -> Int in val += 1; return val })
         
+        XCTAssertEqual(1, val)
+        XCTAssertEqual(1, res)
         XCTAssertEqual(res, val)
         
         XCTAssertTrue(lock.tryLock())
         
         let queue = DispatchQueue.global(qos: .userInitiated)
-        
-//        let queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.)
         
         let expect = expectation(description: "operation should be called")
 

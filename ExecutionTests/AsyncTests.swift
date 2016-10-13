@@ -11,6 +11,27 @@ import XCTest
 
 class AsyncTests: XCTestCase
 {
+    func test_delay_seconds()
+    {
+        let expectation = self.expectation(description: "delayed closure did run")
+        
+        let now = NSDate()
+        var when = NSDate()
+        
+        delay(3) {
+            
+            when = NSDate()
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 4)
+        {
+            XCTAssertNil($0)
+            
+            XCTAssertGreaterThan(when.timeIntervalSinceReferenceDate, now.timeIntervalSinceReferenceDate + 2)
+        }
+    }
+    
     func testDelay()
     {
         let expectation = self.expectation(description: "delayed closure did run")

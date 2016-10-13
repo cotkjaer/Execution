@@ -59,13 +59,15 @@ open class Task
     /// - parameter after : time to delay execution of task
     ///
     /// If the delay is negative the task is scheduled to execute in 0.1 seconds
-    open func schedule(_ after: Double)
+    open func schedule(_ delayInSeconds: Double)
     {
         let capturedSecret = secret
         
-        let deadlineTime = DispatchTime.now() + after
-
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
+        foreground(delay: delayInSeconds) {[weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
+        
+//        let deadlineTime = DispatchTime.now() + after
+//
+//        DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
         
 //        DispatchQueue.main.async/*delay(max(0.1, after))*/ { [weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
 

@@ -8,70 +8,13 @@
 
 import Foundation
 
-/*
-//public enum ExecutionPriority
-//{
-//    case high
-//    case `default`
-//    case low
-//    case lowest
-//    
-//    fileprivate var dispatch_priority : dispatch_queue_priority_t
-//        {
-//            switch self
-//            {
-//            case .high: return DispatchQueue.GlobalQueuePriority.high
-//            case .default: return DispatchQueue.GlobalQueuePriority.default
-//            case .low: return DispatchQueue.GlobalQueuePriority.low
-//            case .lowest: return DispatchQueue.GlobalQueuePriority.background
-//            }
-//    }
-//    
-//    func queue() -> Dispatch.DispatchQueue
-//    {
-//        return DispatchQueue.global(priority: dispatch_priority)
-//    }
-//}
+// MARK: - Reversed lookup
 
-// MARK: - Delay
-
-public extension DispatchTime
+extension DispatchQoS.QoSClass
 {
-    func delay(_ delay: Double) -> DispatchTime
-    {
-        if delay < 0
-        {
-            return self
-        }
-        else
-        {
-            return self + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-        }
-    }
-}
-*/
-
-public func delay(bySeconds seconds: Double, dispatchLevel: DispatchLevel = .main, closure: @escaping () -> ())
-{
-    let dispatchTime = DispatchTime.now() + Double(Int64(seconds * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-    
-    dispatchLevel.dispatchQueue.asyncAfter(deadline: dispatchTime, execute: closure)
-}
-
-public enum DispatchLevel
-{
-    case main, userInteractive, userInitiated, utility, background
-    
     var dispatchQueue: DispatchQueue
     {
-        switch self
-        {
-        case .main:             return DispatchQueue.main
-        case .userInteractive:  return DispatchQueue.global(qos: .userInteractive)
-        case .userInitiated:    return DispatchQueue.global(qos: .userInitiated)
-        case .utility:          return DispatchQueue.global(qos: .utility)
-        case .background:       return DispatchQueue.global(qos: .background)
-        }
+        return DispatchQueue.global(qos: self)
     }
 }
 
@@ -79,36 +22,42 @@ public enum DispatchLevel
 
 extension DispatchQueue
 {
-    func async(after: Double, execute closure: @escaping ()->())
+    func async(delayed seconds: Double, execute closure: @escaping ()->())
     {
-        let when = DispatchTime.now() + after
-        
-        asyncAfter(deadline: when, execute: closure)
+        if seconds < 0
+        {
+            async(execute: closure)
+        }
+        else
+        {
+            let when = DispatchTime.now() + seconds
+            
+            asyncAfter(deadline: when, execute: closure)
+        }
     }
 }
 
-
-private func delay(_ time: Double, onQueue queue: DispatchQueue = DispatchQueue.main, closure: @escaping ()->())
+private func delay(_ seconds: Double, onQueue queue: DispatchQueue, execute closure: @escaping ()->())
 {
-    queue.async(after: time, execute: closure)
+    queue.async(delayed: seconds, execute: closure)
 }
 
-public func delay(_ time: Double, closure:@escaping ()->())
+public func delay(_ seconds: Double, execute closure:@escaping ()->())
 {
-    delay(time, onQueue: DispatchQueue.main, closure: closure)
+    delay(seconds, onQueue: DispatchQueue.main, execute: closure)
 }
 
-public func background(delay d: Double = 0, priority: DispatchQoS = .default, closure:@escaping ()->())
+public func background(delay seconds: Double = 0, qos: DispatchQoS.QoSClass = .userInitiated, execute closure: @escaping ()->())
 {
-    delay(d, onQueue: DispatchQueue.global(qos: .userInitiated), closure: closure)
+    delay(seconds, onQueue: DispatchQueue.global(qos: qos), execute: closure)
 }
 
-public func foreground(delay d: Double = 0, closure:@escaping ()->())
+public func foreground(delay seconds: Double = 0, execute closure: @escaping ()->())
 {
-    delay(d, onQueue: DispatchQueue.main, closure: closure)
+    delay(seconds, onQueue: DispatchQueue.main, execute: closure)
 }
 
-public func async(closure: @escaping ()->())
+public func async(execute closure: @escaping ()->())
 {
     DispatchQueue.main.async(execute: closure)
 }
