@@ -19,8 +19,6 @@ extension BlockOperation
     }
 }
 
-// MARK: - <#comment#>
-
 extension OperationQueue
 {
     public func addOperationWithBlock(_ block: @escaping () -> (), completion: ((_ cancelled: Bool) -> ())?)

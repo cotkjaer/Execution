@@ -64,12 +64,6 @@ open class Task
         let capturedSecret = secret
         
         foreground(delay: delayInSeconds) {[weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
-        
-//        let deadlineTime = DispatchTime.now() + after
-//
-//        DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
-        
-//        DispatchQueue.main.async/*delay(max(0.1, after))*/ { [weak self] in if self?.secret == capturedSecret { self?.scheduled -= 1; self?.closure() } }
 
         scheduled += 1
     }

@@ -15,7 +15,6 @@ extension OperationQueue
     /** Adds `operation` to queue, but delays the operation `delay` seconds
     - parameter operation : The `NSOperation` to add
     - parameter delay : the number of seconds to delay the operation
-    - 
  */
     public func addOperation(_ operation: Operation, withDelay seconds: Double)
     {
@@ -35,7 +34,7 @@ extension OperationQueue
 // MARK: - DelayOperation
 
 /// Simple synchronous NSOperation that will sleep for the given interval
-private class DelayOperation : Operation
+public class DelayOperation : Operation
 {
     let microseconds : useconds_t
     
@@ -55,9 +54,9 @@ private class DelayOperation : Operation
         microseconds = useconds_t(milliseconds * 1_000)
     }
     
-    final override var isAsynchronous : Bool  { return false }
+    final override public var isAsynchronous : Bool  { return false }
 
-    final override func main()
+    final override public func main()
     {
         guard microseconds > 1000 else { return }
         

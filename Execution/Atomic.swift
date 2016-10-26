@@ -70,13 +70,12 @@ extension Atomic where V : IntegerArithmetic, V: ExpressibleByIntegerLiteral
         
         return _value
     }
-    
 }
 
 
 open class NonblockingAtomic<V>
 {
-    fileprivate let queue = DispatchQueue(label: "UUID().uuidString", qos: .userInteractive)// SerialQueue(name: UUID().uuidString)
+    fileprivate let queue = DispatchQueue(label: UUID().uuidString, qos: .userInteractive)
     fileprivate var _value : V
     
     public init(_ value: V)

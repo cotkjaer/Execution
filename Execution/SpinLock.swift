@@ -20,7 +20,7 @@ import os
 
 open class SpinLock
 {
-    fileprivate var spinLock = os_unfair_lock()//OSSpinLock(OS_SPINLOCK_INIT)
+    fileprivate var spinLock = os_unfair_lock()
     
     /** Locks the spinlock if it would not block
      
@@ -29,7 +29,6 @@ open class SpinLock
     open func tryLock() -> Bool
     {
         return os_unfair_lock_trylock(&spinLock)
-//        return OSSpinLockTry(&spinLock)
     }
     
     /** Locks the spinlock, blocks until the lock can be locked
@@ -37,7 +36,6 @@ open class SpinLock
     open func lock()
     {
         return os_unfair_lock_lock(&spinLock)
-//        OSSpinLockLock(&spinLock)
     }
     
     /** Unlocks the spinlock
@@ -45,7 +43,6 @@ open class SpinLock
     open func unlock()
     {
         return os_unfair_lock_unlock(&spinLock)
-//        OSSpinLockUnlock(&spinLock)
     }
     
     /** Locks, executes block, unlocks

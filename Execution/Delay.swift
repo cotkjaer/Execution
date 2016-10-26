@@ -8,39 +8,14 @@
 
 import Foundation
 
-public enum Delay
+internal func delay(_ seconds: Double, onQueue queue: DispatchQueue, execute closure: @escaping ()->())
 {
-    case by(TimeInterval)
-    case until(Date)
+    queue.async(delayed: seconds, execute: closure)
 }
 
-internal extension Delay
+public func delay(_ seconds: Double, execute closure: @escaping ()->())
 {
-    var seconds: TimeInterval
-    {
-        switch self
-        {
-        case .by(let seconds):
-            return seconds
-            
-        case .until(let date):
-            return max ( 0, date.timeIntervalSinceNow )
-        }
-    }
+    delay(seconds, onQueue: DispatchQueue.main, execute: closure)
 }
 
-extension Delay: CustomStringConvertible
-{
-    public var description: String
-    {
-        switch self
-        {
-        case .by(let seconds):
-            return "Delay for \(seconds) seconds"
-            
-        case .until(let date):
-            return "Delay until \(DateFormatter().string(from: date)) \(seconds) seconds"
-        }
-    }
-}
 
